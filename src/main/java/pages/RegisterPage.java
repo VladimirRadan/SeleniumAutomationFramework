@@ -1,10 +1,15 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
+import utils.Utils;
 
-public class RegisterPage extends BasePage{
+public class RegisterPage extends BasePage {
 
 
     public RegisterPage(WebDriver driver) {
@@ -34,19 +39,21 @@ public class RegisterPage extends BasePage{
     private String password;
 
 
-    public RegisterPage goToRegisterPage(){
+    public RegisterPage goToRegisterPage() {
         clickOnElement(signInLink);
         clickOnElement(goToRegisterFormLink);
         return this;
     }
 
 
-    public RegisterPage registerPage(){
+    public RegisterPage registerPage() {
         username = faker.internet().emailAddress();
         password = faker.internet().password();
         typeIn(firstNameField, faker.name().firstName());
         typeIn(lastNameField, faker.name().lastName());
-        typeIn(dobField, "12/12/1999");
+//        getElement(dobField).sendKeys(Keys.TAB);
+//        typeIn(dobField, "2000");
+        typeIn(dobField, dobInput());
         typeIn(addressField, faker.address().fullAddress());
         typeIn(postCodeField, faker.address().zipCode());
         typeIn(cityField, faker.address().city());
@@ -56,14 +63,37 @@ public class RegisterPage extends BasePage{
         typeIn(emailField, username);
         typeIn(passwordField, password);
         clickOnElement(registerButton);
+        Utils.waitForSeconds(2);
         return this;
     }
 
-    private void selectCountry(){
+    private void selectCountry() {
         Select select = new Select(getElement(countryDropdown));
         select.selectByValue("US");
     }
 
+    private String dobInput() {
+        if (driver instanceof ChromeDriver) {
+            return "1212" + Keys.TAB + "1929";
+        } else if (driver instanceof FirefoxDriver) {
+            return "12/12/1999";
+        } else if (driver instanceof EdgeDriver) {
+            return "12/12/1999";
+        }
+        return null;
+    }
 
+    public boolean isUserRegistered(){
+        return matchesExpectedText(myAccountPageTitle, "My account")
+                && matchesExpectedText(myAccountMenuProfile," Profile");
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 
 }

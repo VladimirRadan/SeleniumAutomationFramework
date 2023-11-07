@@ -18,6 +18,9 @@ public class BaseTest {
         }
         driver.get("https://practicesoftwaretesting.com/#/");
     }
+    public WebDriver getDriver() {
+        return driver;
+    }
 
 
 

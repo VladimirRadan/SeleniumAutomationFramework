@@ -10,13 +10,16 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class BasePage {
 
 
-    private WebDriver driver;
+    protected WebDriver driver;
     private WebDriverWait wait;
     Faker faker;
+    private static final Logger log = LogManager.getLogger(BasePage.class.getName());
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
@@ -74,6 +77,17 @@ public class BasePage {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    protected boolean matchesExpectedText(By locator, String expectedText){
+        WebElement element = getElement(locator);
+        if (element.getText().trim().equals(expectedText)){
+            log.info("PASSED - Text found in element: " + element.getText() + " matches expected text: " + expectedText);
+            return true;
+        }else {
+            log.error("FAILED - Text found in element: " + element.getText() + " is not matched expected text: " + expectedText);
+        }
+        return false;
     }
 
 
