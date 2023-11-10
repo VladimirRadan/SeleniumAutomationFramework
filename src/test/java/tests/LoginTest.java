@@ -1,12 +1,67 @@
 package tests;
 
+import dataproviders.DataProviders;
+import listeners.RetryAnalyzer;
+import listeners.TestListener;
+import model.LoginUser;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
 import pages.LoginPage;
+import pages.RegisterPage;
+import utils.Utils;
 
+import java.util.List;
+
+@Listeners(TestListener.class)
 public class LoginTest extends BaseTest{
 
     LoginPage login;
+    RegisterPage registerPage;
+
+    //shutterbug - visual testing
+
+    @BeforeMethod
+    public void loginSetup(){
+        login = new LoginPage(driver);
+        registerPage = new RegisterPage(driver);
+    }
 
 
+    @Test(retryAnalyzer = RetryAnalyzer.class)
+    public void loginUserTest(){
+        login.goToLoginForm()
+                .loginUser("customer@practicesoftwaretesting.com", "welcome01");
+        Assert.assertTrue(registerPage.isUserRegisteredAndLoggedIn());
+    }
+
+    @Test(dataProvider = "loginDataProvider", dataProviderClass = DataProviders.class)
+    public void invalidLoginTest(String username, String password){
+        login.goToLoginForm()
+                .loginUser(username, password);
+        Assert.assertTrue(login.isErrorMessagePresent());
+    }
+
+    @Test(dataProvider = "loginDataProvider", dataProviderClass = DataProviders.class)
+    public void invalidLoginTestFromJson(){
+        List<LoginUser> list = Utils.getDataFromJson();
+        for (int i = 0; i < list.size(); i++) {
+            login.goToLoginForm()
+                    .loginUser(list.get(i).getUsername(), list.get(i).getPassword());
+        }
+        Assert.assertTrue(login.isErrorMessagePresent());
+    }
+
+
+    @Test
+    public void lombokTest(){
+        LoginUser loginUserModel = LoginUser.builder()
+                .password("")
+                .username("")
+                .build();
+        System.out.println(loginUserModel);
+    }
 
 
 

@@ -10,7 +10,7 @@ public class BaseTest {
 
     @BeforeMethod
     public void setup(){
-        driver = DriverManager.setDriver("chrome");
+        driver = DriverManager.setDriver();
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {

@@ -1,17 +1,24 @@
 package core;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import utils.Utils;
 
 import java.time.Duration;
 
+import static utils.Utils.dotEnv;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DriverManager {
 
-        private static WebDriver driver;
+        private static String browser = dotEnv().get("BROWSER");
 
-        public static WebDriver setDriver(String browser){
+        public static WebDriver setDriver(){
+            WebDriver driver = null;
              if (browser.equalsIgnoreCase("chrome")){
                  driver = new ChromeDriver();
              }else if (browser.equalsIgnoreCase("firefox")){
@@ -22,10 +29,6 @@ public class DriverManager {
              driver.manage().window().maximize();
              driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
              return driver;
-        }
-
-        public static WebDriver getDriver(){
-            return new ChromeDriver();
         }
 
 

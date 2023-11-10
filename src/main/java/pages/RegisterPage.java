@@ -7,6 +7,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import utils.Utils;
 
 public class RegisterPage extends BasePage {
@@ -46,7 +47,7 @@ public class RegisterPage extends BasePage {
     }
 
 
-    public RegisterPage registerPage() {
+    public RegisterPage registerUser() {
         username = faker.internet().emailAddress();
         password = faker.internet().password();
         typeIn(firstNameField, faker.name().firstName());
@@ -67,6 +68,11 @@ public class RegisterPage extends BasePage {
         return this;
     }
 
+    public RegisterPage registerNewUser() {
+
+        return this;
+    }
+
     private void selectCountry() {
         Select select = new Select(getElement(countryDropdown));
         select.selectByValue("US");
@@ -83,9 +89,18 @@ public class RegisterPage extends BasePage {
         return null;
     }
 
-    public boolean isUserRegistered(){
+    public boolean isUserRegisteredAndLoggedIn(){
         return matchesExpectedText(myAccountPageTitle, "My account")
                 && matchesExpectedText(myAccountMenuProfile," Profile");
+    }
+
+    public String actualText(){
+        return getElement(myAccountPageTitle).getText();
+    }
+
+    public void isUserRegisteredAndLoggedIn2(){
+        Assert.assertTrue(matchesExpectedText(myAccountPageTitle, "My account"));
+        Assert.assertTrue(matchesExpectedText(myAccountMenuProfile," Profile"));
     }
 
     public String getUsername() {

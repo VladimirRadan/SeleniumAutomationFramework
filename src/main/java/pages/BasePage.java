@@ -12,6 +12,8 @@ import java.util.Locale;
 import java.util.Random;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.testng.Assert;
+import utils.Utils;
 
 public class BasePage {
 
@@ -20,10 +22,11 @@ public class BasePage {
     private WebDriverWait wait;
     Faker faker;
     private static final Logger log = LogManager.getLogger(BasePage.class.getName());
+    private long waitTime =Long.parseLong(Utils.dotEnv().get("EXPLICIT_WAIT_TIME"));
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(waitTime));
         faker = new Faker(new Locale("en-us"));
     }
 
