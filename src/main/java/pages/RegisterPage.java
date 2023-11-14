@@ -91,7 +91,7 @@ public class RegisterPage extends BasePage {
 
     public boolean isUserRegisteredAndLoggedIn(){
         return matchesExpectedText(myAccountPageTitle, "My account")
-                && matchesExpectedText(myAccountMenuProfile," Profile");
+                && matchesExpectedText(myAccountMenuProfile,"Profile");
     }
 
     public String actualText(){
@@ -100,7 +100,7 @@ public class RegisterPage extends BasePage {
 
     public void isUserRegisteredAndLoggedIn2(){
         Assert.assertTrue(matchesExpectedText(myAccountPageTitle, "My account"));
-        Assert.assertTrue(matchesExpectedText(myAccountMenuProfile," Profile"));
+        Assert.assertTrue(matchesExpectedText(myAccountMenuProfile,"Profile"));
     }
 
     public String getUsername() {

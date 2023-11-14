@@ -69,17 +69,26 @@ public class BasePage {
 
     protected void clickOnElement(By locator) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        try {
-            wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
-        } catch (ElementClickInterceptedException e) {
-            //wait.until(ExpectedConditions.presenceOfElementLocated(locator)).click();
-            js.executeScript("arguments[0].click()", getElement(locator));
-        } catch (StaleElementReferenceException s) {
-            s.printStackTrace();
-            hoverAndClick(locator, 0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+       try {
+           wait.until(ExpectedConditions.elementToBeClickable(locator));
+           hoverAndClick(locator, 0);
+       }catch (ElementClickInterceptedException ec){
+           log.warn("ElementClickInterceptedException happened!");
+           wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+           hoverAndClick(locator, 0);
+       }catch (StaleElementReferenceException stale){
+           log.warn("StaleElementReferenceException happened!");
+           //driver.findElement(locator).click();
+           getElement(locator).click();
+       }catch (TimeoutException te){
+           te.printStackTrace();
+           log.warn("TimeoutException happened");
+           WebElement element = getElement(locator);
+           js.executeScript("arguments[0].click()", element);
+       }catch (Exception e){
+           e.printStackTrace();
+           log.error("Unable to click on element!");
+       }
     }
 
     protected boolean matchesExpectedText(By locator, String expectedText){

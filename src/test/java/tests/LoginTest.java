@@ -7,6 +7,7 @@ import model.LoginUser;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import pages.RegisterPage;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Listeners(TestListener.class)
 public class LoginTest extends BaseTest{
+
 
     LoginPage login;
     RegisterPage registerPage;
@@ -29,21 +31,21 @@ public class LoginTest extends BaseTest{
     }
 
 
-    @Test(retryAnalyzer = RetryAnalyzer.class)
+    @Test(retryAnalyzer = RetryAnalyzer.class, groups = "smoke")
     public void loginUserTest(){
         login.goToLoginForm()
                 .loginUser("customer@practicesoftwaretesting.com", "welcome01");
         Assert.assertTrue(registerPage.isUserRegisteredAndLoggedIn());
     }
 
-    @Test(dataProvider = "loginDataProvider", dataProviderClass = DataProviders.class)
+    @Test(dataProvider = "loginDataProvider", dataProviderClass = DataProviders.class, groups = "smoke")
     public void invalidLoginTest(String username, String password){
         login.goToLoginForm()
                 .loginUser(username, password);
         Assert.assertTrue(login.isErrorMessagePresent());
     }
 
-    @Test(dataProvider = "loginDataProvider", dataProviderClass = DataProviders.class)
+    @Test()
     public void invalidLoginTestFromJson(){
         List<LoginUser> list = Utils.getDataFromJson();
         for (int i = 0; i < list.size(); i++) {
@@ -61,6 +63,14 @@ public class LoginTest extends BaseTest{
                 .username("")
                 .build();
         System.out.println(loginUserModel);
+    }
+
+    @Test
+    @Parameters({"username", "password"})
+    public void loginUserFromTestngParameters(String username, String password){
+        login.goToLoginForm()
+                .loginUser(username, password);
+        Assert.assertTrue(registerPage.isUserRegisteredAndLoggedIn());
     }
 
 
