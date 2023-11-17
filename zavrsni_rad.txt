@@ -1,0 +1,23 @@
+App: https://automationexercise.com/
+
+#Registracija
+1. Registrovati novog korisnika - happy path only
+
+#Login
+1. Login test za happy path
+2. Uraditi negativne testove za login. Jedan test treba da procita sve kredencijale iz json fajla, drugi iz data providera
+3. Izlogovati usera i verifikovati da je izlogovan
+
+#Korpa
+1. Dodati proizvoljno dva proizvoda u korpu. Kolicina jednog od dodatih proizvoda treba da bude minimum 2
+2. Verifikovati da je cena*kolicina za sve proizvode u korpi jednaka total amount-u
+3. Zavrsiti kupovinu proizvoda, platiti proizvode i verifikovati uspesnost kupovine
+
+#Kategorije
+1. Iz Category-menu sa leve strane izabrati proizvoljnu kategoriju i verifikovati da je broj proizvoda na stranici manji od broja proizvoda pre filtriranja
+
+#Contact form
+1. Popuniti formu i uraditi upload tekstualnog fajla. Fajl treba da se nalazi u okviru samog projekta. Verifikovati da je forma uspesno submitovana
+
+#Git
+Upload-ovati projekat na Github i poslati link do projekta
