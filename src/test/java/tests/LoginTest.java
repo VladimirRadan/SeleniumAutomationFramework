@@ -7,7 +7,6 @@ import model.LoginUser;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import pages.RegisterPage;
@@ -24,10 +23,10 @@ public class LoginTest extends BaseTest{
 
     //shutterbug - visual testing
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void loginSetup(){
-        login = new LoginPage(driver);
-        registerPage = new RegisterPage(driver);
+        login = new LoginPage(driverThreadLocal.get());
+        registerPage = new RegisterPage(driverThreadLocal.get());
     }
 
 
@@ -65,13 +64,13 @@ public class LoginTest extends BaseTest{
         System.out.println(loginUserModel);
     }
 
-    @Test
-    @Parameters({"username", "password"})
-    public void loginUserFromTestngParameters(String username, String password){
-        login.goToLoginForm()
-                .loginUser(username, password);
-        Assert.assertTrue(registerPage.isUserRegisteredAndLoggedIn());
-    }
+//    @Test
+//    @Parameters({"username", "password"})
+//    public void loginUserFromTestngParameters(String username, String password){
+//        login.goToLoginForm()
+//                .loginUser(username, password);
+//        Assert.assertTrue(registerPage.isUserRegisteredAndLoggedIn());
+//    }
 
 
 

@@ -18,7 +18,6 @@ import static utils.Utils.dotEnv;
 public class DriverManager {
 
         private static String browser = dotEnv().get("BROWSER");
-        private WebDriver driver;
 
         private static final DriverManager instance = new DriverManager();
 
@@ -28,29 +27,27 @@ public class DriverManager {
 
         public WebDriver setDriver(){
              if (browser.equalsIgnoreCase("chrome")){
-                 driver = new ChromeDriver(OptionsManager.getChromeOptions());
+                 return new ChromeDriver(OptionsManager.getChromeOptions());
              }else if (browser.equalsIgnoreCase("firefox")){
-                 driver = new FirefoxDriver(OptionsManager.getFirefoxOptions());
+                 return new FirefoxDriver(OptionsManager.getFirefoxOptions());
              } else if (browser.equalsIgnoreCase("edge")) {
-                 driver = new EdgeDriver();
+                 return new EdgeDriver();
              }
-             driver.manage().window().maximize();
-             driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
-             return driver;
+             return null;
         }
 
-    public WebDriver setDriver(String browser){
-        if (browser.equalsIgnoreCase("chrome")){
-            driver = new ChromeDriver(OptionsManager.getChromeOptions());
-        }else if (browser.equalsIgnoreCase("firefox")){
-            driver = new FirefoxDriver(OptionsManager.getFirefoxOptions());
-        } else if (browser.equalsIgnoreCase("edge")) {
-            driver = new EdgeDriver();
-        }
-        driver.manage().window().maximize();
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
-        return driver;
-    }
+//    public WebDriver setDriver(String browser){
+//        if (browser.equalsIgnoreCase("chrome")){
+//            driver = new ChromeDriver(OptionsManager.getChromeOptions());
+//        }else if (browser.equalsIgnoreCase("firefox")){
+//            driver = new FirefoxDriver(OptionsManager.getFirefoxOptions());
+//        } else if (browser.equalsIgnoreCase("edge")) {
+//            driver = new EdgeDriver();
+//        }
+//        driver.manage().window().maximize();
+//        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
+//        return driver;
+//    }
 
 
 }

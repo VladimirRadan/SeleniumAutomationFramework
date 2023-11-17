@@ -3,27 +3,37 @@ package tests;
 import core.DriverManager;
 import core.Environment;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Parameters;
 import org.testng.asserts.SoftAssert;
+
+import java.time.Duration;
 
 public class BaseTest {
 
-    protected WebDriver driver;
+    ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
+    //protected WebDriver driver;
     SoftAssert softAssert;
 
 
-    @BeforeMethod
-    @Parameters("browser")
-    public void setup(String browser){
-        driver = DriverManager.getInstance().setDriver(browser);
+    @BeforeMethod(alwaysRun = true)
+    //@Parameters("browser")
+    public void setup(){
+        driverThreadLocal.set(DriverManager.getInstance().setDriver());
         softAssert = new SoftAssert();
         //driver.get("https://practicesoftwaretesting.com/#/");
-        new Environment(driver).openBrowser();
+        driverThreadLocal.get().manage().window().maximize();
+        driverThreadLocal.get().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
+        new Environment(driverThreadLocal.get()).openBrowser();
     }
-    public WebDriver getDriver() {
-        return driver;
+    public WebDriver getDriverThreadLocal() {
+        return driverThreadLocal.get();
+    }
+
+    @AfterMethod(alwaysRun = true)
+    public void tearDown(){
+        driverThreadLocal.get().quit();
+        driverThreadLocal.remove();
     }
 
 

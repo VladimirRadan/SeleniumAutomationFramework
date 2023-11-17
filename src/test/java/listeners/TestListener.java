@@ -58,7 +58,7 @@ public class TestListener extends BaseTest implements ITestListener {
     @Override
     public void onTestFailure(ITestResult result) {
         Object testClass = result.getInstance();
-        WebDriver driver = ((BaseTest)testClass).getDriver();
+        WebDriver driver = ((BaseTest)testClass).getDriverThreadLocal();
         //takeScreenshot(driver);
         createReport(result);
         extentTest.log(Status.FAIL, "Test: " + result.getMethod().getMethodName() + " FAILED");

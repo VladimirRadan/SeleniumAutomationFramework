@@ -14,10 +14,10 @@ public class RegisterTest extends BaseTest{
     LoginPage login;
 
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setupRegister(){
-        registerPage = new RegisterPage(driver);
-        login = new LoginPage(driver);
+        registerPage = new RegisterPage(driverThreadLocal.get());
+        login = new LoginPage(driverThreadLocal.get());
     }
 
     //nacin 1
