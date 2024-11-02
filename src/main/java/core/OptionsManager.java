@@ -11,8 +11,9 @@ public class OptionsManager {
         chromeOptions.addArguments("--start-maximized");
         chromeOptions.addArguments("--ignore-certificate-errors");
         chromeOptions.addArguments("--disable-popup-blocking");
-        chromeOptions.addArguments("headless");
-        chromeOptions.addArguments("window-size=1920,1080");
+        chromeOptions.addArguments("--headless");
+        chromeOptions.addArguments("--window-size=1920,1080");
+        chromeOptions.addArguments("--disable-gpu");
         return chromeOptions;
     }
 

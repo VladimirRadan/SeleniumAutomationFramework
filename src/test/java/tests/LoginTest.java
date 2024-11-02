@@ -7,6 +7,7 @@ import model.LoginUser;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import pages.RegisterPage;
@@ -55,22 +56,22 @@ public class LoginTest extends BaseTest{
     }
 
 
-    @Test
-    public void lombokTest(){
-        LoginUser loginUserModel = LoginUser.builder()
-                .password("")
-                .username("")
-                .build();
-        System.out.println(loginUserModel);
-    }
-
 //    @Test
-//    @Parameters({"username", "password"})
-//    public void loginUserFromTestngParameters(String username, String password){
-//        login.goToLoginForm()
-//                .loginUser(username, password);
-//        Assert.assertTrue(registerPage.isUserRegisteredAndLoggedIn());
+//    public void lombokTest(){
+//        LoginUser loginUserModel = LoginUser.builder()
+//                .password("")
+//                .username("")
+//                .build();
+//        System.out.println(loginUserModel);
 //    }
+
+    @Test()
+    @Parameters({"username", "password"})
+    public void loginUserFromTestngParameters(String username, String password){
+        login.goToLoginForm()
+                .loginUser(username, password);
+        Assert.assertTrue(registerPage.isUserRegisteredAndLoggedIn());
+    }
 
 
 

@@ -1,6 +1,7 @@
 package core;
 
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -17,22 +18,20 @@ import static utils.Utils.dotEnv;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DriverManager {
 
-        private static String browser = dotEnv().get("BROWSER");
+        private static final String browser = dotEnv().get("BROWSER");
 
+        @Getter
         private static final DriverManager instance = new DriverManager();
 
-        public static DriverManager getInstance(){
-            return instance;
-        }
+    public WebDriver setDriver(){
 
-        public WebDriver setDriver(){
-             if (browser.equalsIgnoreCase("chrome")){
-                 return new ChromeDriver(OptionsManager.getChromeOptions());
-             }else if (browser.equalsIgnoreCase("firefox")){
-                 return new FirefoxDriver(OptionsManager.getFirefoxOptions());
-             } else if (browser.equalsIgnoreCase("edge")) {
-                 return new EdgeDriver();
-             }
+                if (browser.equalsIgnoreCase("chrome")){
+                    return new ChromeDriver(OptionsManager.getChromeOptions());
+                }else if (browser.equalsIgnoreCase("firefox")){
+                    return new FirefoxDriver(OptionsManager.getFirefoxOptions());
+                } else if (browser.equalsIgnoreCase("edge")) {
+                    return new EdgeDriver();
+                }
              return null;
         }
 

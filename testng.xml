@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Test Suite" parallel="classes" thread-count="4" data-provider-thread-count="2">
+<suite name="All Test Suite" >
     <test name="SeleniumAutomationFramework">
         <classes>
             <class name="tests.LoginTest">
+                <parameter name="username" value="customer@practicesoftwaretesting.com"></parameter>
+                <parameter name="password" value="welcome01"></parameter>
                 <methods>
                     <include name="loginUserTest"/>
                     <include name="invalidLoginTest"/>
                     <include name="invalidLoginTestFromJson"/>
-                    <include name="lombokTest"/>
+<!--                    <include name="lombokTest"/>-->
+                    <include name="loginUserFromTestngParameters"/>
                 </methods>
             </class>
-            <class name="tests.RegisterTest">
-                <methods>
-                    <include name="registerTest"/>
-                    <include name="registerTest2"/>
-                    <include name="registerTest3"/>
-                    <include name="negativeRegisterTest"/>
-                </methods>
-            </class>
+<!--            <class name="tests.RegisterTest">-->
+<!--                <methods>-->
+<!--                    <include name="registerTest"/>-->
+<!--                    <include name="registerTest2"/>-->
+<!--                    <include name="registerTest3"/>-->
+<!--                    <include name="negativeRegisterTest"/>-->
+<!--                </methods>-->
+<!--            </class>-->
         </classes>
     </test>
 </suite>

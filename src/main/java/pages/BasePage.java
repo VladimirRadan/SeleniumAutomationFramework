@@ -27,7 +27,7 @@ public class BasePage {
     public BasePage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(waitTime));
-        faker = new Faker(new Locale("en-us"));
+        faker = new Faker(Locale.ENGLISH);
     }
 
 
@@ -37,7 +37,7 @@ public class BasePage {
 
     protected void typeIn(By locator, String text) {
         WebElement element = getElement(locator);
-        element.clear();
+        //element.clear();
         element.sendKeys(text);
     }
 
