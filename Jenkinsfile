@@ -8,7 +8,7 @@ pipeline {
 
     environment {
             GITHUB_URL = 'https://github.com/VladimirRadan/SeleniumAutomationFramework.git'
-            BRANCH = 'main'
+            BRANCH = 'master'
             CREDENTIALS_ID = 'github-credentials' // ID koji ćete postaviti u Jenkins-u
         }
 
